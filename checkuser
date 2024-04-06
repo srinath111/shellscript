@@ -1,0 +1,24 @@
+#!/bin/bash
+echo "enter username"
+read username
+if [ -n $username ]
+then
+	echo "user is present"
+	sudo passwd $username
+		
+else
+	echo "user is absent"
+fi
+
+
+# check userpresent print details ,if user is not present create user
+echo "enter usern"
+read A
+if grep -w $A /etc/passwd
+then
+	echo "$A user is present"
+else
+	useradd $A
+	echo "user is added"
+fi
+

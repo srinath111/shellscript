@@ -1,0 +1,24 @@
+#!/bin/bash
+echo "enter a user"
+read username
+if [ -n $username ]
+then
+	echo "prit user is valid"
+	EXUSER=$(cat /etc/passwd | grep -i $username | cut -d ":" -f 1)
+	echo "$EXUSER"
+	if [ "$username" == "$EXUSER" ]
+	then
+		echo "user is already exitst, create new user"
+	else
+		echo "enter password"
+		# -s used hide the passwd
+		read -s PASSWORD
+		useradd -m $username
+		echo "$username:$PASSWORD" | sudo chpasswd
+		#-e expire the password for the named account  
+		passwd -e $username
+		echo "user is created"
+	fi
+else
+	echo "user is invalid"
+fi
